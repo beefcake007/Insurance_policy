@@ -2,6 +2,7 @@ package com.insurance.policy.aspect;
 
 import com.insurance.policy.constant.CookieConstant;
 import com.insurance.policy.constant.RedisConstant;
+import com.insurance.policy.exception.PolicyAuthorizeException;
 import com.insurance.policy.utils.CookieUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.Aspect;
@@ -23,13 +24,13 @@ import javax.servlet.http.HttpServletRequest;
 @Aspect
 @Component
 @Slf4j
-public class SellerAuthorizeAspect {
+public class PolicyAuthorizeAspect {
 
     @Autowired
     private StringRedisTemplate redisTemplate;
 
-    @Pointcut("execution(public * com.insurance.policy.controller.Seller*.*(..))" +
-            "&& !execution(public * com.insurance.policy.controller.SellerUserController.*(..))")
+    @Pointcut("execution(public * com.insurance.policy.controller.Policy*.*(..))" +
+            "&& !execution(public * com.insurance.policy.controller.PolicyUserController.*(..))")
     public void verify() {
     }
 
@@ -42,14 +43,14 @@ public class SellerAuthorizeAspect {
         Cookie cookie = CookieUtil.get(request, CookieConstant.TOKEN);
         if (cookie == null) {
             log.warn("【登录校验】Cookie中查不到token");
-            throw new SellerAuthorizeException();
+            throw new PolicyAuthorizeException();
         }
 
         //去redis里查询
         String tokenValue = redisTemplate.opsForValue().get(String.format(RedisConstant.TOKEN_PREFIX, cookie.getValue()));
         if (StringUtils.isEmpty(tokenValue)) {
             log.warn("【登录校验】redis中查不到token");
-            throw new SellerAuthorizeException();
+            throw new PolicyAuthorizeException();
         }
     }
 }
