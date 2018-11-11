@@ -30,7 +30,7 @@ public class PolicyAuthorizeAspect {
     private StringRedisTemplate redisTemplate;
 
     @Pointcut("execution(public * com.insurance.policy.controller.Policy*.*(..))" +
-            "&& !execution(public * com.insurance.policy.controller.PolicyUserController.*(..))")
+            "&& !execution(public * com.insurance.policy.controller.EmployeeController.*(..))")
     public void verify() {
     }
 

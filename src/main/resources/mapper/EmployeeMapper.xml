@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.insurance.policy.repository.EmployeeRepository">
+
+    <resultMap id="BaseResultMap" type="com.insurance.policy.dataobject.Employee">
+        <id column="employee_id" property="employeeId" jdbcType="VARCHAR"/>
+        <id column="employee_name" property="employeeName" jdbcType="VARCHAR"/>
+        <id column="employee_pwd" property="employeePwd" jdbcType="VARCHAR"/>
+        <id column="employee_sex" property="employeeSex" jdbcType="VARCHAR"/>
+        <id column="employee_age" property="employeeAge" jdbcType="INTEGER"/>
+        <id column="employee_phone" property="employeePhone" jdbcType="VARCHAR"/>
+        <id column="employee_mail" property="employeeMail" jdbcType="VARCHAR"/>
+        <id column="employee_status" property="employeeStatus" jdbcType="INTEGER"/>
+        <id column="employee_position" property="employeePosition" jdbcType="VARCHAR"/>
+        <id column="employee_job" property="employeeJob" jdbcType="VARCHAR"/>
+        <id column="employee_cardId" property="employeeCardId" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="employeeLogin" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select *
+        from employee
+        where employee_id = #{employeeId, jdbcType=VARCHAR} and employee_pwd=#{employeePwd, jdbcType=VARCHAR}
+    </select>
+</mapper>

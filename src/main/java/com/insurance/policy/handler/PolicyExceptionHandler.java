@@ -15,7 +15,7 @@ public class PolicyExceptionHandler {
     //拦截登录异常
     @ExceptionHandler(value = PolicyAuthorizeException.class)
     public ModelAndView handlerAuthorizeException() {
-        return new ModelAndView("redirect:http://localhost:8080/sell");
+        return new ModelAndView("redirect:http://localhost:8080/Insurance_policy");
     }
 
     @ExceptionHandler(value = PolicyException.class)
