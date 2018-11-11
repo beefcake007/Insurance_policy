@@ -11,11 +11,13 @@ spring:
   redis:
     host: localhost
     port: 6379
+  thymeleaf:
+    prefix: classpath:/templates/
 server:
   servlet:
-    context-path: /Insurance_policy
+    context-path: /
 logging:
   level:
-    com.fanye.sell.dataobject.mapper: trace
+    com.insurance.policy.repository: trace
 mybatis:
   mapper-locations: classpath:mapper/*.xml

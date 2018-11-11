@@ -9,6 +9,10 @@ public enum ResultEnum {
 
     PARAM_ERROR(1, "参数不正确"),
 
+    LOGIN_MEMBER(2, "登录成功，员工身份"),
+
+    LOGIN_MANAGER(3, "登录成功，管理员身份"),
+
     LOGIN_FAIL(25, "登录失败,登录信息不正确"),
 
     LOGOUT_SUCCESS(25, "登出成功"),;

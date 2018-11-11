@@ -6,7 +6,7 @@ CREATE TABLE `employee` (
   `employee_age` INT(3) NOT NULL COMMENT '员工年龄',
   `employee_phone` VARCHAR(16) NOT NULL COMMENT '员工电话',
   `employee_mail` VARCHAR(32) COMMENT '员工邮箱',
-  `manager_status` TINYINT(1) NOT NULL COMMENT '员工是否是管理员 1为管理员 0不是',
+  `employee_status` TINYINT(1) NOT NULL COMMENT '员工是否是管理员 1为管理员 0不是',
   `employee_position` VARCHAR(32) NOT NULL COMMENT '员工职位',
   `employee_job` VARCHAR(32) NOT NULL COMMENT '员工岗位',
   `employee_cardId` VARCHAR(32) NOT NULL COMMENT '员工身份证号',

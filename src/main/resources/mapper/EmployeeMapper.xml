@@ -21,4 +21,16 @@
         from employee
         where employee_id = #{employeeId, jdbcType=VARCHAR} and employee_pwd=#{employeePwd, jdbcType=VARCHAR}
     </select>
+
+    <select id="findEmployeeList" resultMap="BaseResultMap">
+        select *
+        from employee
+        where employee_status = 0 limit #{startRow} , #{pageSize}
+    </select>
+
+    <select id="findEmployeeNum" resultType="java.lang.Long">
+        select count(*)
+        from employee
+        where employee_status = 0
+    </select>
 </mapper>
