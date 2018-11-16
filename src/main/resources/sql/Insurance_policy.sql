@@ -93,5 +93,6 @@ CREATE TABLE `employee_work` (
   `employee_id` VARCHAR(8) NOT NULL COMMENT '员工工号',
   `entry_task` INT NOT NULL COMMENT '录入的任务包',
   `entry_invoice` INT NOT NULL COMMENT '录入的发票',
+  `entry_date` DATE NOT NULL COMMENT '录入时间',
   PRIMARY KEY(`employee_id`)
 ) COMMENT '个人工作统计'
