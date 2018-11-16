@@ -33,6 +33,7 @@ function checkLogin(){
         },
         type:'post',   
         success:function(data) {
+            console.log(data);
             if (data.code == 1) {
                 showDialog("登陆信息","<span style='color:red;'>"+data.msg+"</span>");
             }else if(data.code == 25){

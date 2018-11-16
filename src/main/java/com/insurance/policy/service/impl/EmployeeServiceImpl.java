@@ -30,4 +30,19 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Long findEmployeeNum() {
         return employeeRepository.findEmployeeNum();
     }
+
+    @Override
+    public Integer deleteEmployee(String employeeId) {
+        return employeeRepository.deleteEmployee(employeeId);
+    }
+
+    @Override
+    public Integer addEmployee(EmployeeDTO employeeDTO) {
+        return employeeRepository.addEmployee(employeeDTO);
+    }
+
+    @Override
+    public Integer updateEmployee(EmployeeDTO employeeDTO) {
+        return employeeRepository.updateEmployee(employeeDTO);
+    }
 }

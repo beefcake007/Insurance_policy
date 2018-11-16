@@ -15,7 +15,16 @@ public enum ResultEnum {
 
     LOGIN_FAIL(25, "登录失败,登录信息不正确"),
 
-    LOGOUT_SUCCESS(25, "登出成功"),;
+    LOGOUT_SUCCESS(25, "登出成功"),
+
+    DELETE_SUCCESS(1,"删除成功"),
+
+    DELETE_FALL(2,"删除失败"),
+
+    SAVE_SUCCESS(3,"保存成功"),
+
+    SAVE_FAIL(4,"保存失败"),;
+
 
     private Integer code;
 

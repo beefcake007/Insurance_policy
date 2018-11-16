@@ -17,4 +17,14 @@ public interface EmployeeService {
 
     /*查询员工个数*/
     Long findEmployeeNum();
+
+    /* 删除员工 */
+    Integer deleteEmployee(String employeeId);
+
+    /* 添加员工 */
+    Integer addEmployee(EmployeeDTO employeeDTO);
+
+    /* 修改员工 */
+    Integer updateEmployee(EmployeeDTO employeeDTO);
+
 }

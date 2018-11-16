@@ -67,24 +67,71 @@
           </h4>
         </div>
         <div class="modal-body">
-          <div class="form-group">
-            <label for="nickname">昵称</label>
-            <input type="text" class="form-control" id="nickname" name="nickname">
-            <input type="hidden" class="form-control" id="id" name="id">
+          <input type="hidden" class="span11" id="employeeId" name="employeeId" />
+          <div class="control-group">
+            <label class="control-label">员工姓名</label>
+            <div class="controls">
+              <input type="text" class="span11" id="employeeName" name="employeeName" placeholder="张X" />
+            </div>
           </div>
-          <div class="form-group">
-            <label for="email">邮箱地址</label>
-            <input type="email" class="form-control" id="email" name="email">
+          <div class="control-group">
+            <label class="control-label">员工密码</label>
+            <div class="controls">
+              <input type="password" class="span11" id="employeePwd" name="employeePwd" placeholder="xxxxxxxx" />
+            </div>
           </div>
-          <div class="form-group">
-            <label for="password">密码</label>
-            <input type="password" class="form-control" id="password" name="password">
+          <div class="control-group">
+            <label class="control-label">员工性别</label>
+            <div class="controls">
+              <label>
+                <input type="radio" id="nan" name="employeeSex"  value="男"/>
+                男</label>
+              <label>
+                <input type="radio" id="nv" name="employeeSex"  value="女"/>
+                女</label>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">员工年龄</label>
+            <div class="controls">
+              <input type="text" class="span11" id="employeeAge" name="employeeAge" placeholder="20" />
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">员工电话</label>
+            <div class="controls">
+              <input type="tel" class="span11" id="employeePhone" name="employeePhone" placeholder="13XXXXXXXXX" />
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">员工邮箱</label>
+            <div class="controls">
+              <input type="email" class="span11" id="employeeMail" name="employeeMail" placeholder="XXXXXXXXX@XXX.com" />
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">员工职位</label>
+            <div class="controls">
+              <input type="text" class="span11" id="employeePosition" name="employeePosition" placeholder="前台" />
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">员工岗位</label>
+            <div class="controls">
+              <input type="text" class="span11" id="employeeJob" name="employeeJob" placeholder="北京" />
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label">员工身份证</label>
+            <div class="controls">
+              <input type="text" class="span11" id="employeeCardId" name="employeeCardId" placeholder="610XXXXXXXXXXXXXXX" />
+            </div>
           </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">关闭
           </button>
-          <button type="submit" class="btn btn-primary">
+          <button type="button" class="btn btn-primary" onclick="update()">
             提交
           </button>
         </div>
@@ -92,12 +139,36 @@
     </div><!-- /.modal -->
   </div>
 </form>
-
+<div class="modal fade" id="userDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <input type="hidden" id="deleteEmployeeId" />
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          &times;
+        </button>
+        <h4 class="modal-title">
+          用户删除
+        </h4>
+      </div>
+      <div class="modal-body">
+        你确定要删除这条信息吗？
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-primary" onclick="deleteEmployee()">
+          确定
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/jquery.ui.custom.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/jquery.uniform.js"></script>
 <script src="/static/js/select2.min.js"></script>
+<script src="/static/js/user/employee.js"></script>
 <script type="text/javascript">
 Date.prototype.format = function(fmt) { 
      var o = { 
@@ -180,7 +251,6 @@ $(function(){
                     data: {pageSize:data.length,currentPage:(data.start / data.length) + 1,type:2}, //传入组装的参数
                     dataType: "json",
                     success: function (result) {
-                        console.log(result);
                         setTimeout(function () {
                             //封装返回数据
                             var returnData = {};
@@ -197,9 +267,12 @@ $(function(){
             },
             //列表表头字段
             columns: [
-                {"data": "employeeId"
+                {
+                    "data": "employeeId"
                 },
-                {"data": "employeeName"  },
+                {
+                    "data": "employeeName"
+                },
                 {
                     "data": "employeePwd"
                 },
@@ -227,10 +300,10 @@ $(function(){
                 {
                     "data": "操作列",
                     render: function (data, type, full) {
-                        //console.log(full);
+                        // console.log(full);
                         var fullStr=JSON.stringify(full);
-                        //console.log(fullStr);
-                        return  "<button type=\"button\" class=\"btn btn-info\"  onclick=\"deleteUser("+full.id+")\" >删除</button>&nbsp;&nbsp;&nbsp;<button type=\"button\" class=\"btn btn-info\" onclick='updateUser("+fullStr+")'>修改</button>";
+                        // console.log(fullStr);
+                        return  "<button type=\"button\" class=\"btn btn-info\"  onclick=\"deleteUser('"+full.employeeId+"')\" >删除</button>&nbsp;&nbsp;&nbsp;<button type=\"button\" class=\"btn btn-info\" onclick='updateUser("+fullStr+")'>修改</button>";
                     }
                 }
 
@@ -242,22 +315,60 @@ $(function(){
 
 function updateUser(data){
     $("#userUpdate").modal('show');
-    $("#id").val(data.id);
-    $("#nickname").val(data.nickname);
-    $("#email").val(data.email);
-    $("#password").val(data.password);
+    $("#employeeId").val(data.employeeId);
+    $("#employeeName").val(data.employeeName);
+    $("#employeePwd").val(data.employeePwd);
+    $("#employeeAge").val(data.employeeAge);
+    $("#employeePhone").val(data.employeePhone);
+    $("#employeeMail").val(data.employeeMail);
+    $("#employeePosition").val(data.employeePosition);
+    $("#employeeJob").val(data.employeeJob);
+    $("#employeeCardId").val(data.employeeCardId);
 }
 
 function deleteUser(id) {
+    $("#deleteEmployeeId").val(id);
+    $("#userDelete").modal('show');
+}
+
+function deleteEmployee()
+{
+    var id = $("#deleteEmployeeId").val();
     $.ajax({
-        url: '/user/delete',
+         url: '/employee/delete',
         data: {id:id},
         type: 'post',
-        success: function (data) {
+        success: function (data)
+        {
+            // console.log(data);
+            alert(data.msg);
             location.reload();
         }
     });
 }
+
+function update()
+{
+    if(jundge())
+    {
+        $.ajax({
+            url:'/employee/update',
+            dataType: 'json',
+            data: $('#fm').serialize(),
+            type:'post',
+            success:function(data) {
+                alert(data.msg);
+                if(data.code == 0)
+                {
+                    window.location.href = "/employee/employeeManager";
+                }
+            }
+        });
+    }
+
+}
+
+
 </script>
 <script src="/static/js/jquery.dataTables.min.js"></script>
 <script src="/static/js/matrix.js"></script>

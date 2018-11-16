@@ -33,4 +33,34 @@
         from employee
         where employee_status = 0
     </select>
+
+    <delete id="deleteEmployee" parameterType="java.lang.String">
+        delete
+        from employee
+        where employee_id = #{employeeId, jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="addEmployee" parameterType="com.insurance.policy.dto.EmployeeDTO">
+        insert
+        into employee
+        values(#{employeeId},#{employeeName},#{employeePwd},#{employeeSex},#{employeeAge},#{employeePhone},#{employeeMail},0,#{employeePosition},#{employeeJob},#{employeeCardId},null,null)
+    </insert>
+
+    <update id="updateEmployee" parameterType="com.insurance.policy.dto.EmployeeDTO">
+        update
+        employee
+        set
+          employee_pwd = #{employeePwd},
+          employee_name = #{employeeName},
+          employee_sex = #{employeeSex},
+          employee_age = #{employeeAge},
+          employee_phone = #{employeePhone},
+          employee_mail = #{employeeMail},
+          employee_position = #{employeePosition},
+          employee_job = #{employeeJob},
+          employee_cardId = #{employeeCardId}
+        where
+          employee_id = #{employeeId}
+    </update>
+
 </mapper>

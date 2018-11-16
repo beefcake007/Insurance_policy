@@ -6,15 +6,19 @@ import com.insurance.policy.dto.PageQuery;
 import com.insurance.policy.enums.ResultEnum;
 import com.insurance.policy.exception.PolicyException;
 import com.insurance.policy.form.EmployeeLoginForm;
+import com.insurance.policy.form.EmployeeSaveForm;
 import com.insurance.policy.service.EmployeeService;
+import com.insurance.policy.utils.ResultVOUtil;
 import com.insurance.policy.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -50,6 +54,12 @@ public class EmployeeController {
         return "manager/employeeManager.html";
     }
 
+    @RequestMapping("/employeeAdd")
+    public String employeeAdd()
+    {
+        return "manager/employeeHandle.html";
+    }
+
     @RequestMapping("/login")
     @ResponseBody
     public ResultVO login(@Valid EmployeeLoginForm employeeLoginForm, BindingResult bindingResult, HttpServletRequest request) {
@@ -76,6 +86,20 @@ public class EmployeeController {
         }
     }
 
+    @RequestMapping("/delete")
+    @ResponseBody
+    public ResultVO delete(@RequestParam(value = "id", required = true) String employeeId)
+    {
+        ResultVO resultVO = new ResultVO();
+        System.out.println(employeeId);
+        Integer num = employeeService.deleteEmployee(employeeId);
+        if(num > 0) {
+            return ResultVOUtil.seccess();
+        }else {
+            return ResultVOUtil.error(ResultEnum.DELETE_FALL.getCode(),ResultEnum.DELETE_FALL.getMessage());
+        }
+    }
+
     @RequestMapping("/employeeInfo")
     @ResponseBody
     public Employee employeeInfo(HttpServletRequest request) {
@@ -96,4 +120,48 @@ public class EmployeeController {
         pageQuery.setTotalRows(total.intValue());
         return pageQuery;
     }
+
+    @RequestMapping("/save")
+    @ResponseBody
+    public ResultVO save(@Valid EmployeeSaveForm employeeSaveForm, BindingResult bindingResult, EmployeeDTO employeeDTO)
+    {
+        if (bindingResult.hasErrors()) {
+            log.error("【员工保存操作】参数不正确，employeeSaveForm={}", employeeSaveForm);
+            throw new PolicyException(ResultEnum.PARAM_ERROR.getCode(),
+                    bindingResult.getFieldError().getDefaultMessage());
+        }
+        Integer result = employeeService.addEmployee(employeeDTO);
+        ResultVO resultVO = new ResultVO();
+        if(result > 0)
+        {
+            return ResultVOUtil.seccess();
+        }
+        else
+        {
+            return ResultVOUtil.error(ResultEnum.SAVE_FAIL.getCode(),ResultEnum.SAVE_FAIL.getMessage());
+        }
+    }
+
+    @RequestMapping("/update")
+    @ResponseBody
+    public ResultVO update(@Valid EmployeeSaveForm employeeSaveForm, BindingResult bindingResult, EmployeeDTO employeeDTO)
+    {
+        System.out.println(employeeDTO.toString());
+        if (bindingResult.hasErrors()) {
+            log.error("【员工保存操作】参数不正确，employeeSaveForm={}", employeeSaveForm);
+            throw new PolicyException(ResultEnum.PARAM_ERROR.getCode(),
+                    bindingResult.getFieldError().getDefaultMessage());
+        }
+        Integer result = employeeService.updateEmployee(employeeDTO);
+        ResultVO resultVO = new ResultVO();
+        if(result > 0)
+        {
+            return ResultVOUtil.seccess();
+        }
+        else
+        {
+            return ResultVOUtil.error(ResultEnum.SAVE_FAIL.getCode(),ResultEnum.SAVE_FAIL.getMessage());
+        }
+    }
+
 }
