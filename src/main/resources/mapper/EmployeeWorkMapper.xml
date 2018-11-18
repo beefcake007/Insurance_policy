@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.insurance.policy.repository.EmployeeWorkRepository">
+
+    <resultMap id="BaseResultMap" type="com.insurance.policy.dataobject.EmployeeWork">
+        <id column="employee_id" property="employeeId" jdbcType="VARCHAR"/>
+        <id column="entry_task" property="entryTask" jdbcType="INTEGER"/>
+        <id column="entry_invoice" property="entryInvoice" jdbcType="INTEGER"/>
+        <id column="entry_date" property="entryDate" jdbcType="DATE"/>
+    </resultMap>
+
+    <select id="getEmployeeWorkByEmployeeId" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select *
+        from employee_work
+        where employee_id = #{employeeId, jdbcType=VARCHAR} and entry_date = FORMAT(now(),"yyyy-mm-dd")
+    </select>
+
+
+</mapper>

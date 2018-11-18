@@ -2,29 +2,28 @@ package com.insurance.policy.controller;
 
 import com.insurance.policy.dataobject.Employee;
 import com.insurance.policy.dto.EmployeeDTO;
+import com.insurance.policy.dto.EmployeeWorkDTO;
 import com.insurance.policy.dto.PageQuery;
 import com.insurance.policy.enums.ResultEnum;
 import com.insurance.policy.exception.PolicyException;
 import com.insurance.policy.form.EmployeeLoginForm;
 import com.insurance.policy.form.EmployeeSaveForm;
 import com.insurance.policy.service.EmployeeService;
+import com.insurance.policy.service.EmployeeWorkService;
 import com.insurance.policy.utils.ResultVOUtil;
 import com.insurance.policy.vo.ResultVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/employee")
@@ -33,6 +32,9 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
+
+    @Autowired
+    private EmployeeWorkService employeeWorkService;
 
     @RequestMapping("/index")
     public String main() {
@@ -59,6 +61,12 @@ public class EmployeeController {
     {
         return "manager/employeeHandle.html";
     }
+
+    @RequestMapping("/employeeDetails")
+    public String employeeDetails(){return "member/employeeDetails.html"; }
+
+    @RequestMapping("/managerDetails")
+    public String managerDetails(){return "manager/managerDetails.html"; }
 
     @RequestMapping("/login")
     @ResponseBody
@@ -106,6 +114,17 @@ public class EmployeeController {
         Employee employee = (Employee) request.getSession().getAttribute("employeeInfo");
         return employee;
     }
+
+    @RequestMapping("/employeeWorkDetails")
+    @ResponseBody
+    public EmployeeWorkDTO employeeWorkDetails(HttpServletRequest request)
+    {
+        Employee employee = (Employee) request.getSession().getAttribute("employeeInfo");
+        System.out.println(employee);
+        EmployeeWorkDTO employeeWorkDTO = employeeWorkService.getEmployeeWorkByEmployeeId(employee.getEmployeeId());
+        return employeeWorkDTO;
+    }
+
 
     @RequestMapping("/employeeList")
     @ResponseBody
