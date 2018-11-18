@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.insurance.policy.repository.CostDetailRepository">
+    <resultMap id="BaseResultMap" type="com.insurance.policy.dataobject.CostDetail">
+        <id column="cost_name" property="costName" jdbcType="VARCHAR"/>
+        <id column="cost_price" property="costPrice" jdbcType="DECIMAL"/>
+        <id column="cost_num" property="costNum" jdbcType="INTEGER"/>
+        <id column="self_ratio" property="selfRatio" jdbcType="DECIMAL"/>
+        <id column="cost_desc" property="costDesc" jdbcType="VARCHAR"/>
+        <id column="cost_id" property="costId" jdbcType="INTEGER"/>
+        <id column="insurance_policy_id" property="insurancePolicyId" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="selectCostDetailListByInsurancePolicyId" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select *
+      from cost_detail
+      where insurance_policy_id = #{insurancePolicyId}
+    </select>
+</mapper>

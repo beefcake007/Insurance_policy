@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.insurance.policy.repository.InsurancePolicyRepository">
+    <resultMap id="BaseResultMap" type="com.insurance.policy.dto.InsurancePolicyDTO">
+        <id column="insurance_policy_id" property="insurancePolicyId" jdbcType="VARCHAR"/>
+        <id column="insurance_policy_code" property="insurancePolicyCode" jdbcType="VARCHAR"/>
+        <id column="recognizee" property="recognizee" jdbcType="VARCHAR"/>
+        <id column="recognizee_card_type" property="recognizeeCardType" jdbcType="VARCHAR"/>
+        <id column="recognizee_card" property="recognizeeCard" jdbcType="VARCHAR"/>
+        <id column="recognizee_phone" property="recognizeePhone" jdbcType="VARCHAR"/>
+        <id column="recognizee_email" property="recognizeeEmail" jdbcType="VARCHAR"/>
+        <id column="invoice_num" property="invoiceNum" jdbcType="INTEGER"/>
+        <id column="insurance_policy_type" property="insurancePolicyType" jdbcType="TINYINT"/>
+        <id column="invoice_price" property="invoicePrice" jdbcType="DECIMAL"/>
+        <id column="seedoc_date" property="seedocDate" jdbcType="DATE"/>
+        <id column="selfpaying_price" property="selfpayingPrice" jdbcType="DECIMAL"/>
+        <id column="type_selfpaying_price" property="typeSelfpayingPrice" jdbcType="DECIMAL"/>
+        <id column="social_security_price" property="socialSecurityPrice" jdbcType="DECIMAL"/>
+        <id column="special" property="special" jdbcType="TINYINT"/>
+        <id column="hospital_id" property="hospitalId" jdbcType="VARCHAR"/>
+        <id column="hospital_name" property="hospitalName" jdbcType="VARCHAR"/>
+        <id column="hospital_level" property="hospitalLevel" jdbcType="INTEGER"/>
+        <id column="department_id" property="departmentId" jdbcType="INTEGER"/>
+        <id column="hospital_date" property="hospitalDate" jdbcType="DATE"/>
+        <id column="other_paying" property="otherPaying" jdbcType="DECIMAL"/>
+        <id column="answer_desc" property="answerDesc" jdbcType="VARCHAR"/>
+        <collection column="insurance_policy_id" property="costDetailList" select="com.insurance.policy.repository.CostDetailRepository.selectCostDetailListByInsurancePolicyId"/>
+    </resultMap>
+    
+    <select id="selectInsurancePolicy" parameterType="java.lang.String" resultMap="BaseResultMap">
+      select *
+      from insurance_policy
+      where insurance_policy_id = #{insurancePolicyId}
+    </select>
+</mapper>

@@ -36,10 +36,11 @@ CREATE TABLE `hospital` (
 ) COMMENT '医院代码表';
 
 CREATE TABLE `insurance_policy` (
-  `insurance_policy_id` VARCHAR(16) NOT NULL COMMENT '保单号',
+  `insurance_policy_id` VARCHAR(16) NOT NULL COMMENT '主键，格式"zip包名"',
+  `insurance_policy_code` VARCHAR(16) NOT NULL COMMENT '保单号',
   `recognizee` VARCHAR(16) NOT NULL COMMENT '被保人',
-  `recognizee_card_type` VARCHAR(16) NOT NULL COMMENT '被保人证件类型',
-  `recognizee_card` VARCHAR(32) NOT NULL COMMENT '被保人证件号码',
+  `recognizee_card_type` VARCHAR(16) COMMENT '被保人证件类型',
+  `recognizee_card` VARCHAR(32) COMMENT '被保人证件号码',
   `recognizee_phone` VARCHAR(16) COMMENT '被保人电话',
   `recognizee_email` VARCHAR(32) COMMENT '被保人邮箱',
   `invoice_num` INT COMMENT '发票总数',
@@ -67,7 +68,7 @@ CREATE TABLE `cost_detail` (
   `self_ratio` DECIMAL(3,2) NOT NULL COMMENT '自负比例',
   `cost_desc` VARCHAR(32) COMMENT '备注',
   `cost_id` INT NOT NULL COMMENT 'ID',
-  `insurance_policy_id` VARCHAR(16) NOT NULL COMMENT '保单号',
+  `insurance_policy_id` VARCHAR(16) NOT NULL COMMENT 'insurance_policy的主键',
   FOREIGN KEY (insurance_policy_id) REFERENCES insurance_policy(insurance_policy_id)
 ) COMMENT '费用明细';
 
