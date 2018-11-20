@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.insurance.policy.repository.TaskDetailRepository">
+
+    <resultMap id="BaseResultMap" type="com.insurance.policy.dataobject.TaskDetail">
+        <id column="original_package_name" property="originalPackageName" jdbcType="VARCHAR"/>
+        <id column="original_doc_num" property="originalDocNum" jdbcType="INTEGER"/>
+        <id column="original_image_num" property="originalImageNum" jdbcType="INTEGER"/>
+        <id column="original_package_date" property="originalPackageDate" jdbcType="DATE"/>
+        <id column="danger_people" property="dangerPeople" jdbcType="VARCHAR"/>
+        <id column="original_status" property="originalStatus" jdbcType="INTEGER"/>
+        <id column="logic_task_package" property="logicTaskPackage" jdbcType="INTEGER"/>
+        <id column="logic_doc_num" property="logicDocNum" jdbcType="INTEGER"/>
+        <id column="logic_image_num" property="logicImageNum" jdbcType="INTEGER"/>
+        <id column="logic_status" property="logicStatus" jdbcType="INTEGER"/>
+        <id column="entry_group" property="entryGroup" jdbcType="VARCHAR"/>
+        <id column="entry_member" property="entryMember" jdbcType="VARCHAR"/>
+        <id column="check_group" property="checkGroup" jdbcType="VARCHAR"/>
+        <id column="check_member" property="checkMember" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <select id="findTaskDetailList" resultMap="BaseResultMap">
+        select *
+        from task_detail
+        limit #{startRow} , #{pageSize}
+    </select>
+
+    <select id="findTaskDetailListNum" resultType="java.lang.Long">
+        select count(*)
+        from task_detail
+    </select>
+
+
+</mapper>
